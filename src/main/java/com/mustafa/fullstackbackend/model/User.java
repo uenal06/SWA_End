@@ -1,5 +1,6 @@
 package com.mustafa.fullstackbackend.model;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -8,17 +9,20 @@ import jakarta.persistence.Id;
 public class User {
 @Id
 @GeneratedValue
-    private Long id;
+    private Long userId;
     private String username;
-    private String name;
-    private String email;
+    private String password;
 
-    public Long getId() {
-        return id;
+    @Column(columnDefinition = "boolean default false")
+    private boolean isAdmin;
+
+
+    public Long getUserId() {
+        return userId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setUserId(Long id) {
+        this.userId = id;
     }
 
     public String getUsername() {
@@ -29,19 +33,21 @@ public class User {
         this.username = username;
     }
 
-    public String getName() {
-        return name;
+    public String getPassword() {
+        return password;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setPassword(String name) {
+        this.password = name;
     }
 
-    public String getEmail() {
-        return email;
+    public boolean getAdminStatus() {
+        return isAdmin;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setAdminStatus(boolean isAdmin) {
+        this.isAdmin = isAdmin;
     }
+
+
 }
