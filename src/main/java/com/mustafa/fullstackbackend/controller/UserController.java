@@ -31,6 +31,8 @@ public class UserController {
                 .orElseThrow(() -> new UserNotFoundException(id));
     }
 
+
+
     @PutMapping("/user/{id}")
     User updateUser(@RequestBody User newUser, @PathVariable Long id) {
         return userRepository.findById(id)

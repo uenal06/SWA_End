@@ -1,14 +1,13 @@
 package com.mustafa.fullstackbackend.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+
+import java.util.Set;
 
 @Entity
 public class User {
-@Id
-@GeneratedValue
+    @Id
+    @GeneratedValue
     private Long userId;
     private String username;
     private String password;
