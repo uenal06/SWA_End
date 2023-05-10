@@ -5,31 +5,38 @@ import { Link, useNavigate } from "react-router-dom";
 export default function Login() {
     let navigate = useNavigate();
 
-    const [user, setUser] = useState({
+    const [credentials, setCredentials] = useState({
         username: "",
         password: "",
     });
 
-    const {username, password } = user;
+    const {username, password } = credentials;
 
     const onInputChange = (e) => {
-        setUser({ ...user, [e.target.name]: e.target.value });
+        setCredentials({ ...credentials, [e.target.name]: e.target.value });
     };
 
     const onSubmit = async (e) => {
         e.preventDefault();
-        await axios.post("http://localhost:8080/user", user);
-        navigate("/");
+        try {
+            const response = await axios.post("http://localhost:8080/login/${username}/{password}", credentials);
+            if (response.data.userId) {
+                navigate("/Hallo");
+            } else {
+                alert("Invalid username or password.");
+            }
+        } catch (error) {
+            console.error(error);
+        }
     };
 
     return (
         <div className="container">
             <div className="row">
                 <div className="col-md-6 offset-md-3 border rounded p-4 mt-2 shadow">
-                    <h2 className="text-center m-4">Register User</h2>
+                    <h2 className="text-center m-4">Login</h2>
 
                     <form onSubmit={(e) => onSubmit(e)}>
-
 
                         <div className="mb-3">
                             <label htmlFor="Username" className="form-label">
@@ -45,14 +52,14 @@ export default function Login() {
                             />
                         </div>
                         <div className="mb-3">
-                            <label htmlFor="Email" className="form-label">
-                                E-mail
+                            <label htmlFor="Password" className="form-label">
+                                Password
                             </label>
                             <input
-                                type={"text"}
+                                type={"password"}
                                 className="form-control"
-                                placeholder="Enter your password address"
-                                name="email"
+                                placeholder="Enter your password"
+                                name="password"
                                 value={password}
                                 onChange={(e) => onInputChange(e)}
                             />
