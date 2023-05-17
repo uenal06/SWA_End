@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useState} from "react";
 import axios from "axios";
-import { Link, useParams } from "react-router-dom";
+import {Link, useParams} from "react-router-dom";
 
 export default function Directory() {
     const [directories, setDirectories] = useState([]);
 
-    const { userId, directoryId } = useParams();
+    const {userId, directoryId} = useParams();
 
     useEffect(() => {
         loadDirectories();
