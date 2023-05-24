@@ -77,5 +77,11 @@ public class DirectoryController {
         return directoryRepository.getDirectoriesByOwnerUserIDAndParentDirectoryId(ownerUserId,parentId);
     }
 
+    @PostMapping("/directory/user/{id}/0")
+    public String getParentId(@PathVariable Long id) {
+        Directory dir=directoryRepository.findByOwnerUserIDAndParentDirectoryId(id,0);
+        return String.valueOf(dir.getDirectoryId());
+    }
+
 
 }

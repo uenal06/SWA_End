@@ -1,6 +1,7 @@
 package com.mustafa.fullstackbackend.controller;
 
 import com.mustafa.fullstackbackend.exception.UserNotFoundException;
+import com.mustafa.fullstackbackend.model.User;
 import com.mustafa.fullstackbackend.model.UserGroup;
 import com.mustafa.fullstackbackend.repository.UserGroupRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@CrossOrigin("http://localhost:3000")
 public class UserGroupController {
     @Autowired
     UserGroupRepository userGroupRepository;
@@ -45,6 +47,21 @@ public class UserGroupController {
     public List<UserGroup> checkIfUserInGroup(
             @PathVariable Long groupId, @PathVariable Long userId) {
         return userGroupRepository.findAllByUserIdAndGroupId(userId, groupId);
+    }
+
+    @GetMapping("/getUsersInGroup/{id}")
+    public List<User> getUsersInGroup(@PathVariable Long id){
+        return userGroupRepository.getUsersInGroup(id);
+    }
+
+    @DeleteMapping("/usergroup/{id}/{groupId}")
+    String deleteUser(@PathVariable Long id, @PathVariable Long groupId) {
+        UserGroup ug=userGroupRepository.findByUserIdAndGroupId(id, groupId);
+        if (ug.userGroupId==null) {
+            throw new UserNotFoundException(id);
+        }
+        userGroupRepository.deleteById(ug.userGroupId);
+        return "User with id " + id + " has been deleted success.";
     }
 
 

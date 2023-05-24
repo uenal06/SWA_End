@@ -15,5 +15,7 @@ public interface DirectoryRepository extends JpaRepository<Directory, Long> {
 
     List<Directory> getDirectoriesByOwnerUserID(Long userId);
 
+    Directory findByOwnerUserIDAndParentDirectoryId(long ownerId, long parentDirectoryId);
+
     List<Directory> getDirectoriesByOwnerUserIDAndParentDirectoryId(Long ownerUserId, Long parentDirectoryId);
 }

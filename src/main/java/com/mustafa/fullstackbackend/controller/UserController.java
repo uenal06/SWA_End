@@ -4,6 +4,8 @@ import com.mustafa.fullstackbackend.exception.UserNotFoundException;
 import com.mustafa.fullstackbackend.model.User;
 import com.mustafa.fullstackbackend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -32,8 +34,8 @@ public class UserController {
     }
 
     @GetMapping("/login/{username}/{password}")
-    User getAuthUser(@PathVariable String username,@PathVariable String password){
-        return userRepository.findByUsernameAndPassword(username,password);
+    User getAuthUser(@PathVariable String username, @PathVariable String password) {
+        return userRepository.findByUsernameAndPassword(username, password);
     }
 
 
@@ -43,20 +45,40 @@ public class UserController {
                 .map(user -> {
                     user.setUsername(newUser.getUsername());
                     user.setPassword(newUser.getPassword());
-                    user.setAdminStatus(newUser.getAdminStatus());;
+                    user.setAdminStatus(newUser.getAdminStatus());
+                    ;
                     return userRepository.save(user);
                 }).orElseThrow(() -> new UserNotFoundException(id));
     }
 
     @DeleteMapping("/user/{id}")
-    String deleteUser(@PathVariable Long id){
-        if(!userRepository.existsById(id)){
+    String deleteUser(@PathVariable Long id) {
+        if (!userRepository.existsById(id)) {
             throw new UserNotFoundException(id);
         }
         userRepository.deleteById(id);
-        return  "User with id "+id+" has been deleted success.";
+        return "User with id " + id + " has been deleted success.";
     }
 
+    @PostMapping("/login")
+    public ResponseEntity<String> login(@RequestBody User credentials) {
+        // Perform authentication logic
+        // Compare the provided username and password with your stored credentials
+        // Return the appropriate response based on the authentication result
+        User user = userRepository.findByUsernameAndPassword(credentials.getUsername(), credentials.getPassword());
+
+        if (user != null) {
+            if (user.getAdminStatus()) {
+                return ResponseEntity.ok().body(String.valueOf(user.getUserId().toString()) + "admin");
+            }
+            // Authentication successful
+            // Return the user ID as a response
+            return ResponseEntity.ok().body(String.valueOf(user.getUserId().toString()));
+        } else {
+            // Authentication failed
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid username or password.");
+        }
+    }
 
 
 }
