@@ -1,60 +1,66 @@
 import axios from "axios";
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import {getValue} from "@testing-library/user-event/dist/utils";
 
-export default function AddUser() {
+export default function AddDirectory() {
     let navigate = useNavigate();
 
-    const [user, setUser] = useState({
-        name: "",
-        username: "",
-        password: "",
+    const [directory, setDirectory] = useState({
+        directoryName: "",
+        parentDirectoryId: "",
+        ownerUserID: localStorage.getItem("myStoredId")
     });
 
-    const {username, password } = user;
+    const { directoryName, parentDirectoryId, ownerUserID } = directory;
 
     const onInputChange = (e) => {
-        setUser({ ...user, [e.target.name]: e.target.value });
+        setDirectory({ ...directory, [e.target.name]: e.target.value });
     };
 
     const onSubmit = async (e) => {
         e.preventDefault();
-        await axios.post("http://localhost:8080/user", user);
-        navigate("/");
+
+        try {
+            const response = await axios.post("http://localhost:8080/directory", directory);
+            console.log(directory)
+            navigate(`/dashboard`);
+        } catch (error) {
+            console.error(error);
+        }
     };
 
     return (
         <div className="container">
             <div className="row">
                 <div className="col-md-6 offset-md-3 border rounded p-4 mt-2 shadow">
-                    <h2 className="text-center m-4">Register User</h2>
+                    <h2 className="text-center m-4">Add Directory</h2>
 
-                    <form onSubmit={(e) => onSubmit(e)}>
-
+                    <form onSubmit={onSubmit}>
                         <div className="mb-3">
-                            <label htmlFor="Username" className="form-label">
-                                Username
+                            <label htmlFor="DirectoryName" className="form-label">
+                                Directory Name
                             </label>
                             <input
-                                type={"text"}
+                                type="text"
                                 className="form-control"
-                                placeholder="Enter your username"
-                                name="username"
-                                value={username}
-                                onChange={(e) => onInputChange(e)}
+                                placeholder="Enter directory name"
+                                name="directoryName"
+                                value={directoryName}
+                                onChange={onInputChange}
                             />
                         </div>
                         <div className="mb-3">
-                            <label htmlFor="Password" className="form-label">
-                                Password
+                            <label htmlFor="ParentDirectoryId" className="form-label">
+                                Parent Directory ID
                             </label>
                             <input
-                                type={"text"}
+                                type="text"
                                 className="form-control"
-                                placeholder="Enter your e-mail address"
-                                name="password"
-                                value={password}
-                                onChange={(e) => onInputChange(e)}
+                                placeholder="Enter parent directory ID"
+                                name="parentDirectoryId"
+                                value={parentDirectoryId}
+                                onChange={onInputChange}
                             />
                         </div>
                         <button type="submit" className="btn btn-outline-primary">

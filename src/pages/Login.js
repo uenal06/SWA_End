@@ -21,18 +21,24 @@ export default function Login() {
         event.preventDefault();
 
         try {
+
             const response = await axios.post("http://localhost:8080/login", {
                 username,
                 password,
             });
 
-            setResponseContent(response.data); // Store the response data (user ID)
+            setResponseContent(response.data);// Store the response data (user ID)
+            localStorage.setItem("myStoredId", response.data);
+            console.log(localStorage.getItem("myStoredId"));
             const x = response.data.toString();
             if (x.includes("admin")) {
-                navigate(`/`)
+                navigate(`/admin`)
             } else {
-                const parDir = await axios.post(`http://localhost:8080/directory/user/${response.data}/0`)
-                navigate(`/dashboard/${response.data}/${parDir.data}`)
+                const parDir = await axios.post(`http://localhost:8080/directory/user/${localStorage.getItem("myStoredId")}/0`)
+                localStorage.setItem("myStoredDirectoryId", parDir.data);
+                navigate(`/dashboard/`)
+                console.log(localStorage.getItem("myStoredDirectoryId"));
+
 
             }
         } catch (error) {

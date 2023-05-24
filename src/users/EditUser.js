@@ -1,31 +1,42 @@
 import axios from "axios";
-import React, {useEffect, useState} from "react";
-import {Link, useNavigate, useParams} from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link, useNavigate, useParams } from "react-router-dom";
 
 export default function EditUser() {
     let navigate = useNavigate();
 
-    const {id} = useParams();
+    const { id } = useParams();
 
     const [user, setUser] = useState({
         username: "",
         password: "",
     });
 
-    const {username, password} = user;
+    const { username, password } = user;
+    const [errors, setErrors] = useState({});
 
-    const onInputChange = (e) => {
-        setUser({...user, [e.target.name]: e.target.value});
+    const onInputChange = ({ target }) => {
+        setUser({ ...user, [target.name]: target.value });
     };
 
     useEffect(() => {
         loadUser();
-    }, []);
+    }, [id]);
 
     const onSubmit = async (e) => {
         e.preventDefault();
-        await axios.put(`http://localhost:8080/user/${id}`, user);
-        navigate("/");
+
+        if (!username || !password) {
+            setErrors({ username: !username, password: !password });
+            return;
+        }
+
+        try {
+            await axios.put(`http://localhost:8080/user/${id}`, user);
+            navigate("/");
+        } catch (error) {
+            console.error(error);
+        }
     };
 
     const loadUser = async () => {
@@ -39,32 +50,34 @@ export default function EditUser() {
                 <div className="col-md-6 offset-md-3 border rounded p-4 mt-2 shadow">
                     <h2 className="text-center m-4">Edit User</h2>
 
-                    <form onSubmit={(e) => onSubmit(e)}>
+                    <form onSubmit={onSubmit}>
                         <div className="mb-3">
                             <label htmlFor="Username" className="form-label">
                                 Username
                             </label>
                             <input
-                                type={"text"}
-                                className="form-control"
+                                type="text"
+                                className={`form-control ${errors.username ? "is-invalid" : ""}`}
                                 placeholder="Enter your name"
                                 name="username"
                                 value={username}
-                                onChange={(e) => onInputChange(e)}
+                                onChange={onInputChange}
                             />
+                            {errors.username && <div className="invalid-feedback">Username is required.</div>}
                         </div>
                         <div className="mb-3">
                             <label htmlFor="Password" className="form-label">
-                                Username
+                                Password
                             </label>
                             <input
-                                type={"text"}
-                                className="form-control"
+                                type="text"
+                                className={`form-control ${errors.password ? "is-invalid" : ""}`}
                                 placeholder="Enter your username"
                                 name="password"
                                 value={password}
-                                onChange={(e) => onInputChange(e)}
+                                onChange={onInputChange}
                             />
+                            {errors.password && <div className="invalid-feedback">Password is required.</div>}
                         </div>
                         <button type="submit" className="btn btn-outline-primary">
                             Submit
