@@ -15,6 +15,8 @@ public class User {
     @Column(columnDefinition = "boolean default false")
     private boolean isAdmin;
 
+    private Long quota;
+
 
     public Long getUserId() {
         return userId;
@@ -48,5 +50,11 @@ public class User {
         this.isAdmin = isAdmin;
     }
 
+    public Long getQuota() {
+        return quota;
+    }
 
+    public void setQuota(Long quota) {
+        this.quota = quota;
+    }
 }

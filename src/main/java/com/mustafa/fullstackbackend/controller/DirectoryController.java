@@ -2,12 +2,8 @@ package com.mustafa.fullstackbackend.controller;
 
 import com.mustafa.fullstackbackend.exception.UserNotFoundException;
 import com.mustafa.fullstackbackend.model.Directory;
-import com.mustafa.fullstackbackend.model.File;
-import com.mustafa.fullstackbackend.model.User;
 import com.mustafa.fullstackbackend.repository.DirectoryRepository;
-import com.mustafa.fullstackbackend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

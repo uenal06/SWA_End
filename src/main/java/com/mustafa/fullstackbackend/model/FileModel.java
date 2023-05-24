@@ -6,16 +6,19 @@ import jakarta.persistence.Id;
 
 
 @Entity
-public class File {
+public class FileModel {
     @Id
     @GeneratedValue
     private Long fileId;
 
     private String name;
+
     private Long size;
     private Long directoryId;
 
     private Long ownerUserId;
+
+
 
     public Long getFileId() {
         return fileId;
