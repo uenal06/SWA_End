@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
+import {toast} from "react-toastify";
 
 export default function EditUser() {
     let navigate = useNavigate();
@@ -20,8 +21,14 @@ export default function EditUser() {
     };
 
     useEffect(() => {
+        const myStoredId = localStorage.getItem("myStoredId");
+        if (!myStoredId.includes("admin")) {
+            toast.error("You dont have the rights")
+            navigate("/dashboard"); // Navigate to "/login/" route
+        }
+
         loadUser();
-    }, [id]);
+    }, [id, navigate]);
 
     const onSubmit = async (e) => {
         e.preventDefault();
@@ -33,7 +40,7 @@ export default function EditUser() {
 
         try {
             await axios.put(`http://localhost:8080/user/${id}`, user);
-            navigate("/");
+            navigate("/admin");
         } catch (error) {
             console.error(error);
         }
@@ -82,7 +89,7 @@ export default function EditUser() {
                         <button type="submit" className="btn btn-outline-primary">
                             Submit
                         </button>
-                        <Link className="btn btn-outline-danger mx-2" to="/">
+                        <Link className="btn btn-outline-danger mx-2" to="/admin">
                             Cancel
                         </Link>
                     </form>

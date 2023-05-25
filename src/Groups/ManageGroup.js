@@ -68,7 +68,7 @@ export default function ManageGroup() {
     const deleteGroup = async () => {
         try {
             await axios.delete(`http://localhost:8080/group/${groupId}`);
-            navigate("/home");
+            navigate("/admin");
         } catch (error) {
             console.error(error);
         }
@@ -142,7 +142,7 @@ export default function ManageGroup() {
                 </button>
             </div>
 
-            <button className="btn btn-primary my-2" onClick={() => navigate("/home")}>
+            <button className="btn btn-primary my-2" onClick={() => navigate("/admin")}>
                 Back to Home
             </button>
         </div>

@@ -25,7 +25,7 @@ export default function AddGroup() {
             await axios.post("http://localhost:8080/group", {
                 groupName,
             });
-            navigate("/");
+            navigate("/admin");
         } catch (error) {
             console.error(error);
         }

@@ -11,6 +11,11 @@ export default function Home() {
     let navigate = useNavigate();
 
     useEffect(() => {
+        const myStoredId = localStorage.getItem("myStoredId");
+        if (!myStoredId.includes("admin")) {
+            navigate("/login"); // Navigate to "/login/" route
+            return; // Exit the useEffect hook
+        }
         loadUsers();
         loadGroups();
     }, []);
@@ -78,6 +83,9 @@ export default function Home() {
                                 </td>
                             </tr>
                         ))}
+                        <td>
+                            <Link className="btn btn-outline-primary" to="/adduser">+ User</Link>
+                        </td>
                         </tbody>
                     </table>
                 ) : (
@@ -101,6 +109,9 @@ export default function Home() {
                                 </td>
                             </tr>
                         ))}
+                        <td>
+                            <Link className="btn btn-outline-primary" to="/addgroup">+ Group</Link>
+                        </td>
                         </tbody>
                     </table>
                 )}

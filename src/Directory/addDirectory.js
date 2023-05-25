@@ -8,11 +8,11 @@ export default function AddDirectory() {
 
     const [directory, setDirectory] = useState({
         directoryName: "",
-        parentDirectoryId: "",
+        parentDirectoryId: localStorage.getItem("myStoredDirectoryId"),
         ownerUserID: localStorage.getItem("myStoredId")
     });
 
-    const { directoryName, parentDirectoryId, ownerUserID } = directory;
+    const { directoryName, parentDirectoryId } = directory;
 
     const onInputChange = (e) => {
         setDirectory({ ...directory, [e.target.name]: e.target.value });
@@ -47,19 +47,6 @@ export default function AddDirectory() {
                                 placeholder="Enter directory name"
                                 name="directoryName"
                                 value={directoryName}
-                                onChange={onInputChange}
-                            />
-                        </div>
-                        <div className="mb-3">
-                            <label htmlFor="ParentDirectoryId" className="form-label">
-                                Parent Directory ID
-                            </label>
-                            <input
-                                type="text"
-                                className="form-control"
-                                placeholder="Enter parent directory ID"
-                                name="parentDirectoryId"
-                                value={parentDirectoryId}
                                 onChange={onInputChange}
                             />
                         </div>

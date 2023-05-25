@@ -1,14 +1,29 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
+import axios from "axios";
 
-export default function Navbar({ isAdmin }) {
+export default function Navbar({isAdmin}) {
+    let navigate = useNavigate();
+    let vsbl = "hidden";
+    if (localStorage.getItem("myStoredId").includes("admin")) {
+        vsbl = "visible";
+
+    }
+
+    const logout = () => {
+        localStorage.setItem("myStoredId", "");
+        localStorage.setItem("myStoredDirectoryId", "");
+        navigate(`/login/`);
+
+
+    };
     return (
         <div>
             <nav className="navbar navbar-expand-lg bg-primary">
                 <div className="container-fluid">
-                    <a className="navbar-brand" href="#">
+                    <Link className="navbar-brand" to="/dashboard/">
                         {localStorage.getItem("myStoredId")}
-                    </a>
+                    </Link>
                     <button
                         className="navbar-toggler"
                         type="button"
@@ -20,28 +35,19 @@ export default function Navbar({ isAdmin }) {
                     >
                         <span className="navbar-toggler-icon"></span>
                     </button>
+                    <div>
+                        <Link className="btn btn-outline-light mx-2" id="hiddenButton" to="/admin"
+                                style={{visibility: `${vsbl}`}}> Manage User/Groups</Link>
 
-                    {isAdmin ? (
-                        <div>
-                            <Link className="btn btn-outline-light" to="/adduser">
-                                Add User
-                            </Link>
-                            <Link className="btn btn-outline-light" to="/addgroup">
-                                Add Group
-                            </Link>
-                        </div>
-                    ) : (
-                        <div>
-                            <Link className="btn btn-outline-light" to="/adddirectory">
-                                Add Directory
-                            </Link>
-                            <Link className="btn btn-outline-light" to="/addfile">
-                                Add File
-                            </Link>
-                        </div>
-                    )}
-                </div>
-            </nav>
-        </div>
-    );
-}
+
+
+                                    <button className="btn btn-outline-light" onClick={logout}>
+                                    Logout
+                                    </button>
+                                    </div>
+
+                                    </div>
+                                    </nav>
+                                    </div>
+                                    );
+                                }

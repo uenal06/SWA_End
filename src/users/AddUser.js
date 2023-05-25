@@ -1,6 +1,7 @@
 import axios from "axios";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {Link, useNavigate} from "react-router-dom";
+import {toast} from "react-toastify";
 
 export default function AddUser() {
     let navigate = useNavigate();
@@ -10,6 +11,16 @@ export default function AddUser() {
         username: "",
         password: "",
     });
+
+    useEffect(() => {
+        const myStoredId = localStorage.getItem("myStoredId");
+        if (!myStoredId.includes("admin")) {
+            toast.error("You dont have the rights")
+            navigate("/dashboard"); // Navigate to "/login/" route
+        }
+
+
+    }, []);
 
     const {username, password} = user;
     const [errors, setErrors] = useState({});
@@ -37,7 +48,7 @@ export default function AddUser() {
             };
             await axios.post("http://localhost:8080/directory", directory);
 
-            navigate("/");
+            navigate("/admin");
         } catch (error) {
             console.error(error);
         }
@@ -85,7 +96,7 @@ export default function AddUser() {
                         <button type="submit" className="btn btn-outline-primary">
                             Submit
                         </button>
-                        <Link className="btn btn-outline-danger mx-2" to="/">
+                        <Link className="btn btn-outline-danger mx-2" to="/admin">
                             Cancel
                         </Link>
                     </form>

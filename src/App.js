@@ -8,20 +8,15 @@ import EditUser from "./users/EditUser";
 import ViewUser from "./users/ViewUser";
 import Login from "./pages/Login";
 import Directory from "./pages/Directory";
-import DirectoryTable from "./pages/Directory";
 import ViewDirectory from "./Directory/ViewDirectory";
 import AddDirectory from "./Directory/addDirectory";
 import NavbarAdmin from "./layout/NavbarAdmin";
 import AddGroup from "./Groups/addGroup";
 import ManageGroup from "./Groups/ManageGroup";
-import FileUpload from "./pages/FileUpload";
+import RenameFile from "./File/editFile";
+import RenameDirectory from "./Directory/EditDirectory";
 
-if (localStorage.getItem("myStoredId").length === 0) {
-    localStorage.setItem("myStoredId", "x");
-}
-if (localStorage.getItem("myStoredDirectoryId").length === 0) {
-    localStorage.setItem("myStoredDirectoryId", "x");
-}
+
 
 function App() {
 
@@ -30,10 +25,10 @@ function App() {
         <div className="App">
             <Router>
                 <Navbar/>
-                <NavbarAdmin></NavbarAdmin>
 
                 <Routes>
-                    <Route exact path="/" element={<Login/>}/>
+                    <Route exact path="/" element={<Directory/>}/>
+                    <Route exact path="/login" element={<Login/>}/>
                     <Route exact path="/admin" element={<Home/>}/>
                     <Route exact path="/adduser" element={<AddUser/>}/>
                     <Route exact path="/edituser/:id" element={<EditUser/>}/>
@@ -41,8 +36,10 @@ function App() {
                     <Route exact path="/dashboard/" element={<Directory/>}/>
                     <Route exact path="/viewdirectory/:id" element={<ViewDirectory/>}/>
                     <Route exact path="/adddirectory" element={<AddDirectory/>}/>
+                    <Route exact path="/editdirectory/:directoryId" element={<RenameDirectory/>}/>
                     <Route exact path="/addgroup" element={<AddGroup/>}/>
                     <Route exact path="/group/:groupId" element={<ManageGroup/>}/>
+                    <Route exact path="editfile/:fileId" element={<RenameFile/>}/>
 
                 </Routes>
             </Router>
