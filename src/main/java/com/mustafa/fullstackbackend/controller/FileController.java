@@ -51,25 +51,71 @@ public class FileController {
                 .orElseThrow(() -> new UserNotFoundException(id));
     }
 
+
     @PutMapping("/file/{id}")
     FileModel updateFile(@RequestBody FileModel newFileModel, @PathVariable Long id) {
         return fileRepository.findById(id)
                 .map(fileModel -> {
+                    // Get the existing file name
+                    String existingFileName = fileModel.getName();
+
+                    // Preserve existing values for size, owner ID, and parent directory ID
+                    Long existingSize = fileModel.getSize();
+                    Long existingOwnerUserId = fileModel.getOwnerUserId();
+                    Long existingDirectoryId = fileModel.getDirectoryId();
+
                     fileModel.setName(newFileModel.getName());
-                    fileModel.setOwnerUserId(newFileModel.getOwnerUserId());
-                    fileModel.setDirectoryId(newFileModel.getDirectoryId());
-                    fileModel.setSize(newFileModel.getSize());
+                    fileModel.setSize(existingSize); // Preserve existing size value
+                    fileModel.setOwnerUserId(existingOwnerUserId); // Preserve existing owner ID value
+                    fileModel.setDirectoryId(existingDirectoryId); // Preserve existing directory ID value
+
+                    // Rename the file in the "C:/Server" directory
+                    try {
+                        String filePath = "C:/Server/" + existingFileName;
+                        File existingFile = new File(filePath);
+                        if (existingFile.exists()) {
+                            String newFilePath = "C:/Server/" + newFileModel.getName();
+                            File newFile = new File(newFilePath);
+                            if (existingFile.renameTo(newFile)) {
+                                System.out.println("File renamed successfully");
+                            } else {
+                                System.out.println("Failed to rename the file");
+                            }
+                        } else {
+                            System.out.println("File not found: " + existingFileName);
+                        }
+                    } catch (Exception e) {
+                        System.out.println("Error renaming file: " + e.getMessage());
+                    }
+
                     return fileRepository.save(fileModel);
                 }).orElseThrow(() -> new UserNotFoundException(id));
     }
 
     @DeleteMapping("/file/{id}")
     String deleteFile(@PathVariable Long id) {
-        if (!fileRepository.existsById(id)) {
-            throw new UserNotFoundException(id);
+        FileModel fileModel = fileRepository.findById(id)
+                .orElseThrow(() -> new UserNotFoundException(id));
+
+        // Delete the file in the "C:/Server" directory
+        try {
+            String filePath = "C:/Server/" + fileModel.getName();
+            File file = new File(filePath);
+            if (file.exists()) {
+                if (file.delete()) {
+                    System.out.println("File deleted successfully");
+                } else {
+                    System.out.println("Failed to delete the file");
+                }
+            } else {
+                System.out.println("File not found: " + fileModel.getName());
+            }
+        } catch (Exception e) {
+            System.out.println("Error deleting file: " + e.getMessage());
         }
+
         fileRepository.deleteById(id);
-        return "File with id " + id + " has been deleted success.";
+        return "File with id " + id + " has been deleted successfully.";
     }
 
     @GetMapping("/directory/files/{directoryId}")
