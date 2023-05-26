@@ -46,7 +46,6 @@ public class UserController {
                     user.setUsername(newUser.getUsername());
                     user.setPassword(newUser.getPassword());
                     user.setAdminStatus(newUser.getAdminStatus());
-                    ;
                     return userRepository.save(user);
                 }).orElseThrow(() -> new UserNotFoundException(id));
     }
