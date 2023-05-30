@@ -18,4 +18,7 @@ public interface DirectoryRepository extends JpaRepository<Directory, Long> {
     Directory findByOwnerUserIDAndParentDirectoryId(long ownerId, long parentDirectoryId);
 
     List<Directory> getDirectoriesByOwnerUserIDAndParentDirectoryId(Long ownerUserId, Long parentDirectoryId);
+
+    @Query("SELECT d from Directory d join Sharing s on d.directoryId=s.directoryId where s.userId=:userId")
+    List<Directory> getSharedDirectoriesOfUser(Long userId);
 }

@@ -79,5 +79,10 @@ public class DirectoryController {
         return String.valueOf(dir.getDirectoryId());
     }
 
+    @GetMapping("/directory/shared/user/{userId}")
+    public List<Directory> getSharedDirectoriesOfUser(@PathVariable Long userId){
+        return directoryRepository.getSharedDirectoriesOfUser(userId);
+    }
+
 
 }

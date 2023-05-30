@@ -1,6 +1,7 @@
 package com.mustafa.fullstackbackend.controller;
 
 import com.mustafa.fullstackbackend.exception.UserNotFoundException;
+import com.mustafa.fullstackbackend.model.Directory;
 import com.mustafa.fullstackbackend.model.FileModel;
 
 import com.mustafa.fullstackbackend.repository.FileRepository;
@@ -159,7 +160,12 @@ public class FileController {
             throw new FileNotFoundException("File not found: " + fileModel.getName());
         }
     }
+
+    @GetMapping("/file/shared/user/{userId}")
+    public List<FileModel> getSharedFileOfUser(@PathVariable Long userId) {
+        return fileRepository.getSharedFilesOfUser(userId);
     }
+}
 
 
 

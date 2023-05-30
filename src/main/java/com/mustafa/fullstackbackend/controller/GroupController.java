@@ -41,19 +41,18 @@ public class GroupController {
     }
 
     @GetMapping("/group/groupnames/{userId}")
-    String getGroupsByUsername(@PathVariable Long userId){
+    String getGroupsByUsername(@PathVariable Long userId) {
         return groupRepository.findGroupNamesByUserId(userId).toString();
     }
 
     @DeleteMapping("/group/{id}")
-    String deleteGroup(@PathVariable Long id){
-        if(!groupRepository.existsById(id)){
+    String deleteGroup(@PathVariable Long id) {
+        if (!groupRepository.existsById(id)) {
             throw new UserNotFoundException(id);
         }
         groupRepository.deleteById(id);
-        return  "User with id "+id+" has been deleted success.";
+        return "User with id " + id + " has been deleted success.";
     }
-
 
 
 }
