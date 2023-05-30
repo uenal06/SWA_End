@@ -15,6 +15,8 @@ import AddGroup from "./Groups/addGroup";
 import ManageGroup from "./Groups/ManageGroup";
 import RenameFile from "./File/editFile";
 import RenameDirectory from "./Directory/EditDirectory";
+import ShareDir from "./Share/ShareDir";
+import ShareFile from "./File/shareFile";
 
 
 
@@ -40,6 +42,8 @@ function App() {
                     <Route exact path="/addgroup" element={<AddGroup/>}/>
                     <Route exact path="/group/:groupId" element={<ManageGroup/>}/>
                     <Route exact path="editfile/:fileId" element={<RenameFile/>}/>
+                    <Route exact path="shareDir/:dirId" element={<ShareDir/>}/>
+                    <Route exact path="shareFile/:fileId" element={<ShareFile/>}/>
 
                 </Routes>
             </Router>

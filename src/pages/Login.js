@@ -85,6 +85,7 @@ export default function Login() {
                             <button className="btn btn-primary" type="submit">
                                 Submit
                             </button>
+                            <Link className="btn btn-link btn-outline-danger" to="/adduser">Sign up</Link>
                         </div>
                     </div>
                 </div>

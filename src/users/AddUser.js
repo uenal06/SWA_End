@@ -12,15 +12,7 @@ export default function AddUser() {
         password: "",
     });
 
-    useEffect(() => {
-        const myStoredId = localStorage.getItem("myStoredId");
-        if (!myStoredId.includes("admin")) {
-            toast.error("You dont have the rights")
-            navigate("/dashboard"); // Navigate to "/login/" route
-        }
 
-
-    }, []);
 
     const {username, password} = user;
     const [errors, setErrors] = useState({});
