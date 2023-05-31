@@ -1,6 +1,7 @@
 package com.mustafa.fullstackbackend.model;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.ColumnDefault;
 
 import java.util.Set;
 
@@ -15,8 +16,12 @@ public class User {
     @Column(columnDefinition = "boolean default false")
     private boolean isAdmin;
 
+
     private Long quota;
 
+    public User() {
+        this.quota = 10485760L; //10MB
+    }
 
     public Long getUserId() {
         return userId;

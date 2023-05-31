@@ -10,6 +10,7 @@ import com.mustafa.fullstackbackend.repository.UserGroupRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -145,6 +146,30 @@ public class SharingController {
             }
         }
         return null;
+    }
+
+    @GetMapping("/sharing/permission/user/{userId}")
+    List<Long> getWritePermissionOfUser(@PathVariable Long userId){
+        List<Sharing> myList=sharingRepository.getSharingsByUserId(userId);
+        List<Long> usersWithPermission=new ArrayList<>();
+        for(Sharing sharing:myList){
+            if (sharing.isPermission()){
+                usersWithPermission.add(sharing.getFileId());
+            }
+        }
+        return usersWithPermission;
+    }
+
+    @GetMapping("/sharing/permission/directory/user/{userId}")
+    List<Long> getWritePermissionOfUserDirectory(@PathVariable Long userId){
+        List<Sharing> myList=sharingRepository.getSharingsByUserId(userId);
+        List<Long> usersWithPermission=new ArrayList<>();
+        for(Sharing sharing:myList){
+            if (sharing.isPermission()){
+                usersWithPermission.add(sharing.getDirectoryId());
+            }
+        }
+        return usersWithPermission;
     }
 
 

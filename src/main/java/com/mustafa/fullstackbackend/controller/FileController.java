@@ -55,6 +55,7 @@ public class FileController {
 
     @PutMapping("/file/{id}")
     FileModel updateFile(@RequestBody FileModel newFileModel, @PathVariable Long id) {
+        createDirectoryIfNotExists();
         return fileRepository.findById(id)
                 .map(fileModel -> {
                     // Get the existing file name
@@ -95,6 +96,7 @@ public class FileController {
 
     @DeleteMapping("/file/{id}")
     String deleteFile(@PathVariable Long id) {
+        createDirectoryIfNotExists();
         FileModel fileModel = fileRepository.findById(id)
                 .orElseThrow(() -> new UserNotFoundException(id));
 
@@ -126,6 +128,7 @@ public class FileController {
 
     @PostMapping("/upload")
     public String handleFileUpload(@RequestParam("file") MultipartFile file) {
+        createDirectoryIfNotExists();
         if (!file.isEmpty()) {
             try {
                 // Replace "path/to/save/file" with the desired location to save the file
@@ -145,6 +148,7 @@ public class FileController {
                 .orElseThrow(() -> new UserNotFoundException(id));
 
         // Replace "path/to/files/directory" with the actual directory path where files are stored
+        createDirectoryIfNotExists();
         String filePath = "C:\\Server\\" + fileModel.getName();
         Path file = Paths.get(filePath);
         Resource resource = new UrlResource(file.toUri());
@@ -164,6 +168,28 @@ public class FileController {
     @GetMapping("/file/shared/user/{userId}")
     public List<FileModel> getSharedFileOfUser(@PathVariable Long userId) {
         return fileRepository.getSharedFilesOfUser(userId);
+    }
+
+    private void createDirectoryIfNotExists() {
+        File directory = new File("C:\\Server\\");
+        if (!directory.exists()) {
+            boolean created = directory.mkdirs();
+            if (!created) {
+                throw new RuntimeException("Failed to create directory: " + "C:\\Server\\");
+            }
+        }
+    }
+
+    @GetMapping("/file/quota/user/{id}")
+    public Long getUsedSizeOfUser(@PathVariable Long id) {
+        List<FileModel> myFiles = fileRepository.getFileModelsByOwnerUserId(id);
+        Long x = 0L;
+        for (FileModel f : myFiles) {
+            x += f.getSize();
+
+        }
+        return x;
+
     }
 }
 

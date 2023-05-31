@@ -19,6 +19,9 @@ public class UserController {
 
     @PostMapping("/user")
     User newUser(@RequestBody User newUser) {
+        if (userRepository.findByUsernameAndPassword(newUser.getUsername(), newUser.getPassword())!=null){
+            return null;
+        }
         return userRepository.save(newUser);
     }
 
@@ -46,6 +49,7 @@ public class UserController {
                     user.setUsername(newUser.getUsername());
                     user.setPassword(newUser.getPassword());
                     user.setAdminStatus(newUser.getAdminStatus());
+                    user.setQuota(newUser.getQuota());
                     return userRepository.save(user);
                 }).orElseThrow(() -> new UserNotFoundException(id));
     }
@@ -70,6 +74,7 @@ public class UserController {
             if (user.getAdminStatus()) {
                 return ResponseEntity.ok().body(String.valueOf(user.getUserId().toString()) + "admin");
             }
+
             // Authentication successful
             // Return the user ID as a response
             return ResponseEntity.ok().body(String.valueOf(user.getUserId().toString()));

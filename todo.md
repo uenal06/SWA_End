@@ -16,17 +16,16 @@
 - [x] Admin may add and remove users from group
 - [x] Sharing a fileModel with group is the same as sharing it seperately
 - [x] Each User has its own root directory
-- [ ] When sharing Files there shall be permissions read and read/write available
-- [ ] System shall prevent users from uploading more bytes than their quota given by admin
+- [x] When sharing Files there shall be permissions read and read/write available
+- [x] System shall prevent users from uploading more bytes than their quota given by admin
 
 <br><br><br>
 
--[ ] Add HomeButton
--[ ] Manage Directory in SharedDirectorys -> Going Up/Down
--[ ] Beautify things like Buttons (Use images instead)
-- [ ] Manage Permission Handling
+-[x] Add HomeButton
+-[x] Manage Directory in SharedDirectorys -> Going Up/Down
+- [ ] Beautify things like Buttons (Use images instead)
+- [x] Manage Permission Handling
 - [ ] Bug Fixes For Admin
-- [ ] Replace Buttons By Images
-- [ ] When accessing a sharedFile don't do shit
-- [ ] Make it create a C://Server Folder when there is none existing
-- 
+- [x] When accessing a sharedFile don't do shit
+- [x] Make it create a C://Server Folder when there is none existing
+- [x] Nicht mehrere Nutzer mit selben Namen

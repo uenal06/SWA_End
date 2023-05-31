@@ -36,6 +36,8 @@ public interface SharingRepository extends JpaRepository<Sharing, Long> {
 
     List<Sharing> getSharingsByGroupIdAndFileId(Long fileId, Long directoryId);
 
+    List<Sharing> getSharingsByUserId(Long userId);
+
 
 
 

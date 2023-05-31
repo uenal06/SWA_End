@@ -84,5 +84,10 @@ public class DirectoryController {
         return directoryRepository.getSharedDirectoriesOfUser(userId);
     }
 
+    @GetMapping("/directory/children/{directoryId}")
+    public List<Directory> getChildren(@PathVariable Long directoryId){
+        return directoryRepository.getDirectoriesByParentDirectoryId(directoryId);
+    }
+
 
 }

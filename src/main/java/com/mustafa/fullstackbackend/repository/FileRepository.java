@@ -16,4 +16,6 @@ public interface FileRepository extends JpaRepository<FileModel, Long> {
 
     @Query("SELECT f from FileModel f join Sharing s on f.fileId=s.fileId where s.userId=:userId")
     List<FileModel> getSharedFilesOfUser(Long userId);
+
+    List<FileModel> getFileModelsByOwnerUserId(Long userId);
 }
