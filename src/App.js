@@ -17,6 +17,7 @@ import RenameFile from "./File/editFile";
 import RenameDirectory from "./Directory/EditDirectory";
 import ShareDir from "./Share/ShareDir";
 import ShareFile from "./File/shareFile";
+import SharedTable from "./pages/SharedTable";
 
 
 
@@ -41,9 +42,10 @@ function App() {
                     <Route exact path="/editdirectory/:directoryId" element={<RenameDirectory/>}/>
                     <Route exact path="/addgroup" element={<AddGroup/>}/>
                     <Route exact path="/group/:groupId" element={<ManageGroup/>}/>
-                    <Route exact path="editfile/:fileId" element={<RenameFile/>}/>
-                    <Route exact path="shareDir/:dirId" element={<ShareDir/>}/>
-                    <Route exact path="shareFile/:fileId" element={<ShareFile/>}/>
+                    <Route exact path="/editfile/:fileId" element={<RenameFile/>}/>
+                    <Route exact path="/shareDir/:dirId" element={<ShareDir/>}/>
+                    <Route exact path="/shareFile/:fileId" element={<ShareFile/>}/>
+                    <Route exact path="/shared" element={<SharedTable/>}/>
 
                 </Routes>
             </Router>

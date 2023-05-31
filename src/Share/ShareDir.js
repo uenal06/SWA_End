@@ -12,6 +12,9 @@ export default function ShareDir() {
     const [allGroups, setAllGroups] = useState([]);
     const [selectedGroup, setSelectedGroup] = useState("");
 
+    const [selectedUserPermission, setSelectedUserPermission] = useState(false);
+    const [selectedGroupPermission, setSelectedGroupPermission] = useState(false);
+
     let navigate = useNavigate();
 
     useEffect(() => {
@@ -48,7 +51,7 @@ export default function ShareDir() {
                 directoryId: dirId,
                 groupId: 0,
                 fileId: 0,
-                permission: false
+                permission: selectedUserPermission
             });
             setSelectedUser("");
             loadSharedUsers();
@@ -109,7 +112,7 @@ export default function ShareDir() {
                     directoryId: dirId,
                     groupId: selectedGroup,
                     fileId: 0,
-                    permission: false
+                    permission: selectedGroupPermission
                 });
                 setSelectedUser("");
                 loadSharedUsers();
@@ -160,9 +163,7 @@ export default function ShareDir() {
                 <h4>Add User</h4>
                 <form onSubmit={addSharedUser}>
                     <div className="mb-3">
-                        <label htmlFor="userId" className="form-label">
-                            User ID:
-                        </label>
+                        <label htmlFor="userId" className="form-label"/>
                         <select
                             className="form-select"
                             id="userId"
@@ -177,6 +178,21 @@ export default function ShareDir() {
                             ))}
                         </select>
                     </div>
+                    <div className="mb-3">
+                        <label htmlFor="userPermission" className="form-label"/>
+                        <div className="form-check">
+                            <input
+                                className="form-check-input"
+                                type="checkbox"
+                                id="userPermission"
+                                checked={selectedUserPermission}
+                                onChange={(e) => setSelectedUserPermission(e.target.checked)}
+                            />
+                            <label className="form-check-label" htmlFor="userPermission">
+                                Write Permission
+                            </label>
+                        </div>
+                    </div>
                     <button type="submit" className="btn btn-primary" disabled={!selectedUser}>
                         Add User
                     </button>
@@ -187,9 +203,7 @@ export default function ShareDir() {
                 <h4>Add Group</h4>
                 <form onSubmit={addSharedGroup}>
                     <div className="mb-3">
-                        <label htmlFor="groupId" className="form-label">
-                            Group ID:
-                        </label>
+                        <label htmlFor="groupId" className="form-label"/>
                         <select
                             className="form-select"
                             id="groupId"
@@ -204,6 +218,22 @@ export default function ShareDir() {
                             ))}
                         </select>
                     </div>
+                    <div className="mb-3">
+                        <label htmlFor="groupPermission" className="form-label"/>
+                        <div className="form-check">
+                            <input
+                                className="form-check-input"
+                                type="checkbox"
+                                id="groupPermission"
+                                checked={selectedGroupPermission}
+                                onChange={(e) => setSelectedGroupPermission(e.target.checked)}
+                            />
+                            <label className="form-check-label ml-2" htmlFor="groupPermission">
+                                Write Permission
+                            </label>
+                        </div>
+                    </div>
+
                     <button type="submit" className="btn btn-primary" disabled={!selectedGroup}>
                         Add Group
                     </button>

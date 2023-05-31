@@ -183,7 +183,6 @@ export default function ShareFile() {
                     </div>
                     <div className="mb-3">
                         <label htmlFor="userPermission" className="form-label">
-                            Permission:
                         </label>
                         <div className="form-check">
                             <input
@@ -194,7 +193,7 @@ export default function ShareFile() {
                                 onChange={(e) => setSelectedUserPermission(e.target.checked)}
                             />
                             <label className="form-check-label" htmlFor="userPermission">
-                                Allow
+                                Write Permission
                             </label>
                         </div>
                     </div>
@@ -238,7 +237,7 @@ export default function ShareFile() {
                                 onChange={(e) => setSelectedGroupPermission(e.target.checked)}
                             />
                             <label className="form-check-label ml-2" htmlFor="groupPermission">
-                                Allow Write
+                                Write Permission
                             </label>
                         </div>
                     </div>

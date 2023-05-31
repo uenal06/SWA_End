@@ -11,9 +11,10 @@ export default function EditUser() {
     const [user, setUser] = useState({
         username: "",
         password: "",
+        quota: "",
     });
 
-    const { username, password } = user;
+    const { username, password, quota } = user;
     const [errors, setErrors] = useState({});
 
     const onInputChange = ({ target }) => {
@@ -34,7 +35,7 @@ export default function EditUser() {
         e.preventDefault();
 
         if (!username || !password) {
-            setErrors({ username: !username, password: !password });
+            setErrors({ username: !username, password: !password, quota: !quota });
             return;
         }
 
@@ -68,6 +69,19 @@ export default function EditUser() {
                                 placeholder="Enter your name"
                                 name="username"
                                 value={username}
+                                onChange={onInputChange}
+                            />
+                            {errors.username && <div className="invalid-feedback">Username is required.</div>}
+                        </div>
+                        <div className="mb-3">
+                            <label htmlFor="Quota" className="form-label">
+                                Quota
+                            </label>
+                            <input
+                                type="number"
+                                className={`form-control ${errors.quota ? "is-invalid" : ""}`}
+                                name="quota"
+                                value={quota}
                                 onChange={onInputChange}
                             />
                             {errors.username && <div className="invalid-feedback">Username is required.</div>}
